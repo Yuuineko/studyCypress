@@ -1,3 +1,4 @@
+//Exemplos de alteração no github cypress//
 /// <reference path = "../support/index.d.ts"/> 
 describe ( 'Cypress TS', () => {
     it.skip('should go to go Google', () =>{
