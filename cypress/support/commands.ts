@@ -27,4 +27,31 @@
 //add testing library commands
 import '@testing-library/cypress/add-commands';
 
-Cypress.Commands.add('google', () =>  cy.visit('https://google.com'))
+Cypress.Commands.add('google', () => cy.visit('https://google.com'));
+
+Cypress.Commands.add('shouldRenderBanner', () => {
+    //usar within para pegar aquele elemento específico
+    cy.get(".slick-slider").within(() => {
+        //Selecionou os banners
+        cy.findAllByRole("heading", { name: /cyberpunk 2077/i })
+        cy.findAllByRole('link', { name: /buy now/i })
+
+        cy.get('.slick-dots > :nth-child(2) > button').click()
+        cy.wait(500)
+
+        cy.findAllByRole("heading", { name: /horizon zero dawn/i })
+        cy.findAllByRole('link', { name: /buy now/i })
+
+        cy.get('.slick-dots > :nth-child(3) > button').click()
+        cy.findAllByRole("heading", { name: /huge promotion!/i })
+        cy.findAllByRole('link', { name: /browse games/i })
+    })
+
+})
+Cypress.Commands.add('shouldRenderShowcase', ({name, highlight = false}) => {
+    //usar within para pegar aquele elemento específico
+    //usar crase (`) faz com a variavel sejam reconhecidas com ${} 
+cy.get(`[data-cy="${name}"]`)
+
+
+})
