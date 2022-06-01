@@ -3,7 +3,7 @@
 
 type ShowcaseAttributes = {
     name: string
-    highlight?: boolean
+    hightlight?: boolean
 }
 
 
@@ -13,10 +13,13 @@ declare namespace Cypress{
 
         google(): Chainable <Window>
     
+         //*custom command toget elements by data-cy*//
+        //  @example cy.shouldRenderBanner()//
+      shouldRenderBanner(): Chainable <Element>
     
         //*custom command to check banner in page*//
-      //  @example cy.shouldRenderBanner()//
-      shouldRenderBanner(): Chainable <Element>
+      //  @example cy.getByDataCy('selector')//
+      getByDataCy(selector: string): Chainable<Element>
     
     
         //*custom command to check showcase in page*//

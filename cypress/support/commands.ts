@@ -29,6 +29,10 @@ import '@testing-library/cypress/add-commands';
 
 Cypress.Commands.add('google', () => cy.visit('https://google.com'));
 
+Cypress.Commands.add('getByDataCy', (selector, ...args) =>{
+    cy.get(`[data-cy="${selector}"]`, ...args)})
+
+
 Cypress.Commands.add('shouldRenderBanner', () => {
     //usar within para pegar aquele elemento específico
     cy.get(".slick-slider").within(() => {
@@ -48,10 +52,22 @@ Cypress.Commands.add('shouldRenderBanner', () => {
     })
 
 })
-Cypress.Commands.add('shouldRenderShowcase', ({name, highlight = false}) => {
+Cypress.Commands.add('shouldRenderShowcase', ({ name, hightlight = false }) => {
     //usar within para pegar aquele elemento específico
     //usar crase (`) faz com a variavel sejam reconhecidas com ${} 
-cy.get(`[data-cy="${name}"]`)
+    cy.getByDataCy(name).within(() => {
+        cy.findAllByRole('heading', { name }).should('exist')
 
-
+        cy.getByDataCy("highlight").should(hightlight ? 'exist' : 'not.exist')
+        
+        if (hightlight) {
+            cy.getByDataCy("highlight").within(() => {
+                cy.findAllByRole('link').should('have.attr', 'href')
+            })
+        }
+        
+        console.log(name)
+        cy.getByDataCy("game-card").should('have.length.gt', 0)
+        
+    })
 })
